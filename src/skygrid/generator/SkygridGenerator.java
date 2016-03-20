@@ -44,7 +44,8 @@ public class SkygridGenerator extends Generator {
 		for (int x = 0; x < 16; x += 4) {
 			for (int z = 0; z < 16; z += 4) {
 				for (int y = 0; y < 128; y += 4) {
-					chunk.setBlock(x, y, z, getRandomBlockId());
+					int blockid = getRandomBlockId();
+					chunk.setBlock(x, y, z, blockid, (blockid == 17) ? rand.nextInt(16) : 0);
 				}
 			}
 		}
@@ -53,9 +54,9 @@ public class SkygridGenerator extends Generator {
 	private int getRandomBlockId() {
 		if (rand.nextInt(100) < 50) {
 			int[] blockid = {1, 3, 17};
-			return blockid[rand.nextInt(blockid.length - 1)];
+			return blockid[rand.nextInt(blockid.length)];
 		}
-		return blocklist[rand.nextInt(blocklist.length - 1)];
+		return blocklist[rand.nextInt(blocklist.length)];
 	}
 
 	@Override
