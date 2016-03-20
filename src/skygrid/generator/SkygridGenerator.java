@@ -1,7 +1,6 @@
 package skygrid.generator;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -15,15 +14,17 @@ public class SkygridGenerator extends Generator {
 	
 	public static final int TYPE_SKYGRID = 3;
 	
-	public static final int[] blocklist = {1, 2, 3, 12, 13, 14, 15, 16, 17, 21, 24, 56, 73, 79, 80, 82, 86, 99, 100, 103, 110, 129, 159, 162};
+	public final int[] blocklist = {2, 12, 13, 14, 15, 16, 21, 24, 56, 73, 79, 80, 82, 86, 99, 100, 103, 110, 129, 159, 162};
 	
 	private ChunkManager level;
 	private NukkitRandom random;
 	
 	private Map<String, Object> options;
 	
-	public SkygridGenerator() {
-		options = new HashMap<String, Object>();
+	private Random rand = new Random(Calendar.getInstance().getTimeInMillis());
+	
+	public SkygridGenerator(Map<String, Object> map) {
+		options = map;
 	}
 	
 	@Override
@@ -50,7 +51,10 @@ public class SkygridGenerator extends Generator {
 	}
 	
 	private int getRandomBlockId() {
-		Random rand = new Random(Calendar.getInstance().getTimeInMillis());
+		if (rand.nextInt(100) < 50) {
+			int[] blockid = {1, 3, 17};
+			return blockid[rand.nextInt(blockid.length - 1)];
+		}
 		return blocklist[rand.nextInt(blocklist.length - 1)];
 	}
 
